@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
@@ -24,12 +25,16 @@ public class Customer {
 
 	private String customerName;
 
+	@JsonIgnore
 	private String gender;
 
+	@JsonIgnore
 	private String mobile;
 
+	@JsonIgnore
 	private String email;
 
+	@JsonIgnore
 	private String password;
 	
 	@OneToOne(mappedBy = "customerId")

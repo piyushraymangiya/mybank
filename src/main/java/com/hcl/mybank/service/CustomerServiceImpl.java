@@ -23,14 +23,17 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	AccountDetailRepository accountRepository;
 
+	@Override
 	public ResponseDto getCustomerAccountSummery(CustomerDto customerDto) {
 
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(customerDto, customer);
+//		Customer customer1 = customerRepository.findById(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("customer not found"));
 
-		return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,
-				customerRepository.findById(customer.getCustomerId())
-						.orElseThrow(() -> new ResourceNotFoundException("customer not found")));
+		if(null==customerRepository.findByCustomerIdAndPassword(customer)) {
+			throw new ResourceNotFoundException("customer not found");
+		}
+		return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,null);
 
 	}
 
