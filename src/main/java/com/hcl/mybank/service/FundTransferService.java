@@ -1,4 +1,4 @@
-package com.hcl.mybank.mybank.service;
+package com.hcl.mybank.service;
 
 import java.time.LocalDate;
 import java.util.List;

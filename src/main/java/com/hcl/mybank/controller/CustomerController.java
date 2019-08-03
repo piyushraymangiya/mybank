@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.mybank.dto.CustomerDto;
-import com.hcl.mybank.dto.FundTransferDto;
 import com.hcl.mybank.dto.ResponseDto;
-import com.hcl.mybank.dto.TransactionDetailDto;
 import com.hcl.mybank.exception.InvalidInputException;
-import com.hcl.mybank.mybank.service.FundTransferService;
 import com.hcl.mybank.service.CustomerService;
 
 @CrossOrigin("*")
