@@ -8,5 +8,4 @@ import com.hcl.mybank.entity.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-//	Customer findByCustomerIdAndPassword(Customer customer);
 }

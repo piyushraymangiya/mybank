@@ -21,6 +21,8 @@ import com.hcl.mybank.repository.CustomerRepository;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+	private static final String CUSTOMER_NOT_FOUND = "customer not found";
+
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -36,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(customerDto, customer);
 		Customer customer1 = customerRepository.findById(customer.getCustomerId())
-				.orElseThrow(() -> new ResourceNotFoundException("customer not found"));
+				.orElseThrow(() -> new ResourceNotFoundException(CUSTOMER_NOT_FOUND));
 		if (customer.getPassword().equals(customer1.getPassword())) {
 			return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED, customer1.getCustomerId());
 		}
@@ -46,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public ResponseDto getAccountSummary(Long customerId) {
 		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> new ResourceNotFoundException("customer not found"));
+				.orElseThrow(() -> new ResourceNotFoundException(CUSTOMER_NOT_FOUND));
 		AccountDetail accountDetail = accountRepository.findByCustomerId(customer);
 		if (null != accountDetail) {
 			AccountSummaryDto accountSummaryDto = new AccountSummaryDto();
@@ -63,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public ResponseDto getBeneficiaries(Long customerId) {
 		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> new ResourceNotFoundException("customer not found"));
+				.orElseThrow(() -> new ResourceNotFoundException(CUSTOMER_NOT_FOUND));
 		List<Beneficiary> beneficiariesList = beneficiaryRepository.findBeneficiary(customer.getCustomerId());
 		if (beneficiariesList.isEmpty()) {
 			return new ResponseDto("Customer Beneficiaries", HttpStatus.OK, beneficiariesList);
