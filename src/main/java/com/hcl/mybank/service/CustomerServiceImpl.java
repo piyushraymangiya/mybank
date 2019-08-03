@@ -28,13 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(customerDto, customer);
-//		Customer customer1 = customerRepository.findById(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("customer not found"));
-
-		if(null==customerRepository.findByCustomerIdAndPassword(customer)) {
-			throw new ResourceNotFoundException("customer not found");
+		Customer customer1 = customerRepository.findById(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("customer not found"));
+		if(customer.getPassword().equals(customer1.getPassword())) {
+			return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,null);	
 		}
-		return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,null);
-
+		throw new  ResourceNotFoundException("enter valid password");
 	}
 
 	@Override

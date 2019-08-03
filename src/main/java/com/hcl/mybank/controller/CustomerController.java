@@ -24,11 +24,10 @@ public class CustomerController {
 
 	@PostMapping("/login")
 	public ResponseEntity<Object> customerLogin(@RequestBody CustomerDto customerDto) throws InvalidInputException {
-		if (customerDto.getCustomerId().equals(null) || customerDto.equals(null)) {
+		if (null==customerDto.getCustomerId() || null==customerDto.getPassword()) {
 			throw new InvalidInputException("Provide valid Input");
 		}
 		return new ResponseEntity<>(customerService.getCustomerAccountSummery(customerDto), HttpStatus.OK);
-
 	}
 
 	@GetMapping("/account/summary/{customerId}")
