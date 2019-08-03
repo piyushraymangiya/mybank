@@ -13,28 +13,30 @@ import com.hcl.mybank.repository.AccountRepository;
 import com.hcl.mybank.repository.CustomerRepository;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
-	
+public class CustomerServiceImpl implements CustomerService {
+
 	@Autowired
 	CustomerRepository customerRepository;
-	
+
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	public ResponseDto getCustomerAccountSummery(CustomerDto customerDto) {
-		
+
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(customerDto, customer);
-		
-		return new ResponseDto("Customer login successfully",HttpStatus.ACCEPTED,customerRepository.findById(customer.getCustomerId()).orElseThrow(()-> 
-		new ResourceNotFoundException("customer not found")));
-		
+
+		return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,
+				customerRepository.findById(customer.getCustomerId())
+						.orElseThrow(() -> new ResourceNotFoundException("customer not found")));
+
 	}
 
 	@Override
 	public ResponseDto getAccountSummary(Long customerId) {
-		customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("customer not found"));
-		return null;
+		Customer customer = customerRepository.findById(customerId)
+				.orElseThrow(() -> new ResourceNotFoundException("customer not found"));
+		return new ResponseDto("Account Summary", HttpStatus.ACCEPTED, customer);
 	}
 
 }
