@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.mybank.dto.AccountDetailsDto;
 import com.hcl.mybank.dto.FundTransferDto;
 import com.hcl.mybank.dto.ResponseDto;
+import com.hcl.mybank.exception.InvalidInputException;
 import com.hcl.mybank.service.AccountService;
 import com.hcl.mybank.service.FundTransferService;
 
@@ -40,7 +41,7 @@ public class AccountController {
 	}
 	
 	@PostMapping("/customers/transfer")
-	public ResponseDto fundTransfer(@RequestBody FundTransferDto fundTransferDto){
+	public ResponseDto fundTransfer(@RequestBody FundTransferDto fundTransferDto) throws InvalidInputException{
 		ResponseDto response = new ResponseDto();
 		response.setData(fundTransferService.fundTransfer(fundTransferDto));
 		response.setHttpStatus(HttpStatus.OK);

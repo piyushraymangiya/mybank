@@ -13,6 +13,8 @@ import com.hcl.mybank.dto.FundTransferDto;
 import com.hcl.mybank.dto.TransactionDetailDto;
 import com.hcl.mybank.entity.AccountDetail;
 import com.hcl.mybank.entity.TransactionDetail;
+import com.hcl.mybank.exception.InvalidInputException;
+import com.hcl.mybank.exception.ResourceNotFoundException;
 import com.hcl.mybank.repository.AccountDetailRepository;
 import com.hcl.mybank.repository.TransactionDetailsRepository;
 
@@ -26,13 +28,14 @@ public class FundTransferService {
 	AccountDetailRepository accountDetailRepository;
 
 	@Transactional
-	public TransactionDetailDto fundTransfer(FundTransferDto fundTransferDto) {
+	public TransactionDetailDto fundTransfer(FundTransferDto fundTransferDto) throws InvalidInputException {
 		TransactionDetailDto transactionDetailDto = new TransactionDetailDto();
-		
+
 		AccountDetail fromAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getOriginAccount());
 		AccountDetail toAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getDestinationAccount());
 
 		if (fromAccount != null && toAccount != null) {
+			throw new ResourceNotFoundException("Transfer Accounts Not Found");
 		}
 
 		Boolean isAllowed = validateBalance(fromAccount, fundTransferDto.getAmount());
@@ -60,18 +63,19 @@ public class FundTransferService {
 			transactionList.add(creditTransaction);
 			transactionList.add(debitTransaction);
 			transactionDetailRepository.saveAll(transactionList);
-			
+
 			fromAccount.setAccountBalance(fromAccount.getAccountBalance() - fundTransferDto.getAmount());
 			toAccount.setAccountBalance(toAccount.getAccountBalance() + fundTransferDto.getAmount());
 
 			BeanUtils.copyProperties(debitTransaction, transactionDetailDto);
 		} else {
 			String message;
-			if(!isAllowed) {
-				message = "Insufficient Minimum Balance - "+fromAccount.getMinimumAccountBalance();
-			}
-			else if(!isInLimit) {
-				message = "Exceded Daily Transaction Limit - "+ fromAccount.getDailyTransactionLimit();
+			if (!isAllowed) {
+				message = "Insufficient Minimum Balance - " + fromAccount.getMinimumAccountBalance();
+				throw new InvalidInputException(message);
+			} else if (!isInLimit) {
+				message = "Exceded Daily Transaction Limit - " + fromAccount.getDailyTransactionLimit();
+				throw new InvalidInputException(message);
 			}
 
 		}
