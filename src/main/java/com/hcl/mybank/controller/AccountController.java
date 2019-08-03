@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.mybank.dto.AccountDetailsDto;
 import com.hcl.mybank.dto.FundTransferDto;
 import com.hcl.mybank.dto.ResponseDto;
-import com.hcl.mybank.mybank.service.FundTransferService;
 import com.hcl.mybank.service.AccountService;
+import com.hcl.mybank.service.FundTransferService;
 
 @CrossOrigin("*")
 @RestController
