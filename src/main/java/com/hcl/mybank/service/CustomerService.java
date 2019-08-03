@@ -7,7 +7,9 @@ import com.hcl.mybank.dto.ResponseDto;
 
 @Component
 public interface CustomerService {
-	
+
 	public ResponseDto getCustomerAccountSummery(CustomerDto customerDto);
+
+	public ResponseDto getAccountSummary(Long customerId);
 
 }
