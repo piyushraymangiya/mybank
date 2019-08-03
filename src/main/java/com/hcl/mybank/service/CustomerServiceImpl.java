@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
 		BeanUtils.copyProperties(customerDto, customer);
 		Customer customer1 = customerRepository.findById(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("customer not found"));
 		if(customer.getPassword().equals(customer1.getPassword())) {
-			return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,null);	
+			return new ResponseDto("Customer login successfully", HttpStatus.ACCEPTED,customer1.getCustomerId());	
 		}
 		throw new  ResourceNotFoundException("enter valid password");
 	}
@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 			accountSummaryDto.setAvailableBalance(accountDetail.getAccountBalance());
 			return new ResponseDto("Account Summary", HttpStatus.ACCEPTED, accountSummaryDto);
 		}
-		return new ResponseDto("No Account mapped with provided customer", HttpStatus.ACCEPTED, null); 
+		return new ResponseDto("No Account customer summery to show", HttpStatus.ACCEPTED, null); 
 		
 	}
 
