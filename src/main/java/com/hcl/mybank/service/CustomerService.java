@@ -8,5 +8,7 @@ public interface CustomerService {
 	public ResponseDto getCustomerAccountSummery(CustomerDto customerDto);
 
 	public ResponseDto getAccountSummary(Long customerId);
+	
+	public ResponseDto getBeneficiaries(Long customerId);
 
 }
