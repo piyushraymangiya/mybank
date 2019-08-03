@@ -1,4 +1,4 @@
-package com.hcl.mybank.mybank;
+package com.hcl.mybank;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
