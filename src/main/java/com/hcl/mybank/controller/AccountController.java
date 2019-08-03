@@ -32,7 +32,7 @@ public class AccountController {
 	private FundTransferService fundTransferService;
 	
 	@GetMapping("/customers/{customerId}")
-	public ResponseEntity<ResponseDto> getTrends(@PathVariable("customerId") Long customerId,Pageable page){
+	public ResponseEntity<ResponseDto> getAccountDetails(@PathVariable("customerId") Long customerId,Pageable page){
 		AccountDetailsDto accontDto = accountService.getAccountDetailsWithTrnxs(customerId,page);
 		ResponseDto responseDto = new ResponseDto();
 		responseDto.setHttpStatus(HttpStatus.OK);
