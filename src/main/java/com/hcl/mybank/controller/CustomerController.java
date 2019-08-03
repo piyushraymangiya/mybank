@@ -17,26 +17,23 @@ import com.hcl.mybank.service.CustomerService;
 @CrossOrigin("*")
 @RestController("/customers")
 public class CustomerController {
-	
+
 	@Autowired
 	CustomerService customerService;
-	
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<Object> getAccountSummery(@RequestBody CustomerDto customerDto) throws InvalidInputException{
-		if (customerDto.getCustomerId().equals(null)||customerDto.equals(null)) {
+	public ResponseEntity<Object> customerLogin(@RequestBody CustomerDto customerDto) throws InvalidInputException {
+		if (customerDto.getCustomerId().equals(null) || customerDto.equals(null)) {
 			throw new InvalidInputException("Provide valid Input");
-		}	
-		return new ResponseEntity<>(customerService.getCustomerAccountSummery(customerDto),HttpStatus.OK);
-		
+		}
+		return new ResponseEntity<>(customerService.getCustomerAccountSummery(customerDto), HttpStatus.OK);
+
 	}
-	
+
 	@GetMapping("/account/summary/{customerId}")
-	public ResponseEntity<Object> getAccountSummary(@PathVariable("customerId") Long customerId){
-		
+	public ResponseEntity<Object> getAccountSummary(@PathVariable("customerId") Long customerId) {
+
 		return null;
 	}
-	
-	
 
 }
