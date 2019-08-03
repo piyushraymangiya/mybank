@@ -19,13 +19,9 @@ public class TransactionDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transactionId;
 
-	@OneToOne
-	@JoinColumn(name = "customerId")
-	private Customer fromAccount;
+	private String fromAccountNumber;
 
-	@OneToOne
-	@JoinColumn(name = "customerId")
-	private Customer toAccount;
+	private String toAccountNumber;
 
 	private Double transactionAmount;
 
