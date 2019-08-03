@@ -31,8 +31,13 @@ public class FundTransferService {
 		AccountDetail fromAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getOriginAccount());
 		AccountDetail toAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getDestinationAccount());
 
-		Boolean isvalid = validateBalanceAndLimits(fromAccount, fundTransferDto.getAmount());
-		if (isvalid) {
+		if (fromAccount != null && toAccount != null) {
+		}
+
+		Boolean isAllowed = validateBalance(fromAccount, fundTransferDto.getAmount());
+		Boolean isInLimit = validateDailyTransactionLimits(fromAccount, fundTransferDto.getAmount());
+
+		if (isInLimit && isAllowed) {
 			TransactionDetail creditTransaction = new TransactionDetail();
 			TransactionDetail debitTransaction = new TransactionDetail();
 
@@ -54,15 +59,31 @@ public class FundTransferService {
 			transactionDetailRepository.save(debitTransaction);
 			fromAccount.setAccountBalance(fromAccount.getAccountBalance() - fundTransferDto.getAmount());
 			toAccount.setAccountBalance(toAccount.getAccountBalance() + fundTransferDto.getAmount());
-			
-			BeanUtils.copyProperties(debitTransaction	, transactionDetailDto);
+
+			BeanUtils.copyProperties(debitTransaction, transactionDetailDto);
+		} else {
+			String message;
+			if(!isAllowed) {
+				message = "Insufficient Minimum Balance - "+fromAccount.getMinimumAccountBalance();
+			}
+			else if(!isInLimit) {
+				message = "Exceded Daily Transaction Limit - "+ fromAccount.getDailyTransactionLimit();
+			}
+
 		}
 
 		return transactionDetailDto;
 	}
 
-	public Boolean validateBalanceAndLimits(AccountDetail account, Double transactionAmount) {
+	public Boolean validateBalance(AccountDetail account, Double transactionAmount) {
 		Double minimumBalance = account.getAccountBalance() - transactionAmount;
+		if (minimumBalance > account.getMinimumAccountBalance()) {
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean validateDailyTransactionLimits(AccountDetail account, Double transactionAmount) {
 
 		List<TransactionDetail> transactions = transactionDetailRepository
 				.findByFromAccountNumberEquals(account.getAccountNumber());
@@ -70,8 +91,7 @@ public class FundTransferService {
 
 		totalTransactionAmount += transactionAmount;
 
-		if ((totalTransactionAmount < account.getDailyTransactionLimit())
-				&& (minimumBalance > account.getMinimumAccountBalance())) {
+		if (totalTransactionAmount < account.getDailyTransactionLimit()) {
 			return true;
 		}
 
