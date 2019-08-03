@@ -11,22 +11,14 @@ import lombok.Data;
 
 @Data
 @Entity
-public class TransactionDetail {
-
+public class Beneficiary {	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long transactionId;
+	private Long id;
+	
+	private Long customerId;
+	
+	private Long beneficiaryId;
 
-	private String fromAccountNumber;
-
-	private String toAccountNumber;
-
-	private Double transactionAmount;
-
-	private String transactionType;
-
-	private LocalDate transactionDate;
-
-	private String comment;
 
 }
