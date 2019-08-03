@@ -41,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
 			throw new ResourceNotFoundException("Customer id is not found");
 		}
 		
-		return null;
+		return accountDto;
 	}
 
 }
