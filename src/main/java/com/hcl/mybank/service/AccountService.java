@@ -1,9 +1,9 @@
 package com.hcl.mybank.service;
 
-import com.hcl.mybank.entity.AccountDetail;
+import com.hcl.mybank.dto.AccountDetailsDto;
 
 public interface AccountService {
 	
-	public AccountDetail getAccountDetailsWithTrnxs(Long custId) ;
+	public AccountDetailsDto getAccountDetailsWithTrnxs(Long custId) ;
 
 }

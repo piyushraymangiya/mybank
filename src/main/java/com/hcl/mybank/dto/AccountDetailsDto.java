@@ -12,7 +12,7 @@ public class AccountDetailsDto {
 
 	private String accountNumber;
 
-	private String availableBalance;
+	private Double availableBalance;
 
 	private LocalDate accountCreationDate;
 
