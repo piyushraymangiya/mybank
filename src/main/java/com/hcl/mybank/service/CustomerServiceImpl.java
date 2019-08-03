@@ -40,14 +40,16 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new ResourceNotFoundException("customer not found"));
 		AccountDetail accountDetail = accountRepository.findByCustomerId(customer);
-
-		AccountSummaryDto accountSummaryDto = new AccountSummaryDto();
-		accountSummaryDto.setCustomerName(customer.getCustomerName());
-		accountSummaryDto.setAccountNumber(accountDetail.getAccountNumber());
-		accountSummaryDto.setAccountType(accountDetail.getAccountType());
-		accountSummaryDto.setAvailableBalance(accountDetail.getAccountBalance());
-
-		return new ResponseDto("Account Summary", HttpStatus.ACCEPTED, accountSummaryDto);
+		if(null != accountDetail) {
+			AccountSummaryDto accountSummaryDto = new AccountSummaryDto();
+			accountSummaryDto.setCustomerName(customer.getCustomerName());
+			accountSummaryDto.setAccountNumber(accountDetail.getAccountNumber());
+			accountSummaryDto.setAccountType(accountDetail.getAccountType());
+			accountSummaryDto.setAvailableBalance(accountDetail.getAccountBalance());
+			return new ResponseDto("Account Summary", HttpStatus.ACCEPTED, accountSummaryDto);
+		}
+		return new ResponseDto("No Account mapped with provided customer", HttpStatus.ACCEPTED, null); 
+		
 	}
 
 }
