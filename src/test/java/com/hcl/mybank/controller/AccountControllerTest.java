@@ -21,7 +21,7 @@ public class AccountControllerTest {
 	FundTransferService fundTransferService;
 
 	@Test
-	public void fundTransfer() throws InvalidInputException {
+	public void fundTransferTest() throws InvalidInputException {
 		TransactionDetailDto debitDto = new TransactionDetailDto();
 		debitDto = new TransactionDetailDto();
 		debitDto.setFromAccountNumber("1111");
