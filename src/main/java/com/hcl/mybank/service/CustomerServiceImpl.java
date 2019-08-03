@@ -31,4 +31,10 @@ public class CustomerServiceImpl implements CustomerService{
 		
 	}
 
+	@Override
+	public ResponseDto getAccountSummary(Long customerId) {
+		customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("customer not found"));
+		return null;
+	}
+
 }
