@@ -4,22 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.lenient;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Pageable;
 
 import com.hcl.mybank.dto.FundTransferDto;
 import com.hcl.mybank.dto.TransactionDetailDto;
 import com.hcl.mybank.entity.AccountDetail;
-import com.hcl.mybank.entity.Customer;
 import com.hcl.mybank.entity.TransactionDetail;
 import com.hcl.mybank.exception.InvalidInputException;
 import com.hcl.mybank.repository.AccountDetailRepository;
