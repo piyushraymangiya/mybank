@@ -38,5 +38,11 @@ public class CustomerController {
 		ResponseDto responseDto = customerService.getAccountSummary(customerId);
 		return new ResponseEntity<>(responseDto, responseDto.getHttpStatus());
 	}
+	
+	@GetMapping("/beneficiary/{customerId}")
+	public ResponseEntity<Object> getBeneficiaries(@PathVariable("customerId") Long customerId){
+		ResponseDto responseDto  = customerService.getBeneficiaries(customerId);
+		return new ResponseEntity<>(responseDto, responseDto.getHttpStatus());
+	}
 
 }
