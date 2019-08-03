@@ -34,7 +34,7 @@ public class FundTransferService {
 		AccountDetail fromAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getOriginAccount());
 		AccountDetail toAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getDestinationAccount());
 
-		if (fromAccount != null && toAccount != null) {
+		if (!(fromAccount != null && toAccount != null)) {
 			throw new ResourceNotFoundException("Transfer Accounts Not Found");
 		}
 
