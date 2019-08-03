@@ -25,7 +25,6 @@ public class CustomerController {
 		if (customerDto.getCustomerId().equals(null)||customerDto.equals(null)) {
 			throw new InvalidInputException("Provide valid Input");
 		}	
-		
 		return new ResponseEntity<>(customerService.getCustomerAccountSummery(customerDto),HttpStatus.OK);
 		
 	}
