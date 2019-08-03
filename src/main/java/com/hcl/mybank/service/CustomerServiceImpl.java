@@ -9,7 +9,7 @@ import com.hcl.mybank.dto.CustomerDto;
 import com.hcl.mybank.dto.ResponseDto;
 import com.hcl.mybank.entity.Customer;
 import com.hcl.mybank.exception.ResourceNotFoundException;
-import com.hcl.mybank.repository.AccountRepository;
+import com.hcl.mybank.repository.AccountDetailRepository;
 import com.hcl.mybank.repository.CustomerRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService {
 	CustomerRepository customerRepository;
 
 	@Autowired
-	AccountRepository accountRepository;
+	AccountDetailRepository accountRepository;
 
 	public ResponseDto getCustomerAccountSummery(CustomerDto customerDto) {
 
