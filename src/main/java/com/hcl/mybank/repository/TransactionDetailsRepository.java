@@ -10,7 +10,7 @@ import com.hcl.mybank.entity.TransactionDetail;
 @Repository
 public interface TransactionDetailsRepository extends JpaRepository<TransactionDetail, Long>{
 
-	List<TransactionDetail> findByToAccountNumberEquals(String accountNumber);
+	List<TransactionDetail> findByFromAccountNumberEquals(String accountNumber);
 
 	
 }
