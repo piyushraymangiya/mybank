@@ -27,9 +27,6 @@ public class CustomerController {
 	CustomerService customerService;
 	
 
-	@Autowired
-	FundTransferService fundTransferService;
-
 	@PostMapping("/login")
 	public ResponseEntity<Object> customerLogin(@RequestBody CustomerDto customerDto) throws InvalidInputException {
 		if (0l==customerDto.getCustomerId() || StringUtils.isEmpty(customerDto.getPassword())) {
@@ -45,14 +42,6 @@ public class CustomerController {
 	}
 	
 
-	@PostMapping("/accounts/customers/transfer")
-	public ResponseDto fundTransfer(@RequestBody FundTransferDto fundTransferDto){
-		ResponseDto response = new ResponseDto();
-		response.setData(fundTransferService.fundTransfer(fundTransferDto));
-		response.setHttpStatus(HttpStatus.OK);
-		response.setMessage("Transfer Sucess");
-		
-		return response; 
-	}
+	
 
 }
