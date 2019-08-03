@@ -1,6 +1,7 @@
 package com.hcl.mybank.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -27,7 +28,7 @@ public class FundTransferService {
 	@Transactional
 	public TransactionDetailDto fundTransfer(FundTransferDto fundTransferDto) {
 		TransactionDetailDto transactionDetailDto = new TransactionDetailDto();
-
+		
 		AccountDetail fromAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getOriginAccount());
 		AccountDetail toAccount = accountDetailRepository.findByAccountNumber(fundTransferDto.getDestinationAccount());
 
@@ -55,8 +56,11 @@ public class FundTransferService {
 			debitTransaction.setTransactionType("DR");
 			debitTransaction.setComment(fundTransferDto.getComments());
 
-			transactionDetailRepository.save(creditTransaction);
-			transactionDetailRepository.save(debitTransaction);
+			List<TransactionDetail> transactionList = new ArrayList<>();
+			transactionList.add(creditTransaction);
+			transactionList.add(debitTransaction);
+			transactionDetailRepository.saveAll(transactionList);
+			
 			fromAccount.setAccountBalance(fromAccount.getAccountBalance() - fundTransferDto.getAmount());
 			toAccount.setAccountBalance(toAccount.getAccountBalance() + fundTransferDto.getAmount());
 
