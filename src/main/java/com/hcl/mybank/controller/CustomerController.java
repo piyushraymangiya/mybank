@@ -3,6 +3,7 @@ package com.hcl.mybank.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ public class CustomerController {
 
 	@PostMapping("/login")
 	public ResponseEntity<Object> customerLogin(@RequestBody CustomerDto customerDto) throws InvalidInputException {
-		if (null==customerDto.getCustomerId() || null==customerDto.getPassword()) {
+		if (0l==customerDto.getCustomerId() || StringUtils.isEmpty(customerDto.getPassword())) {
 			throw new InvalidInputException("Provide valid Input");
 		}
 		return new ResponseEntity<>(customerService.getCustomerAccountSummery(customerDto), HttpStatus.OK);
