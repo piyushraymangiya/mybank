@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hcl.mybank.dto.AccountDetailsDto;
@@ -26,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	
 	@Override
-	public AccountDetailsDto getAccountDetailsWithTrnxs(Long custId) {
+	public AccountDetailsDto getAccountDetailsWithTrnxs(Long custId,Pageable page) {
 		Optional<Customer> custOptional = customerRepository.findById(custId);
 		AccountDetailsDto accountDto = null;
 		if(custOptional.isPresent()){
@@ -35,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 			accountDto.setAccountNumber(accountEntity.getAccountNumber());
 			accountDto.setAvailableBalance(accountEntity.getAccountBalance());
 			accountDto.setAccountCreationDate(accountEntity.getAccountCreationDate());
-			List<TransactionDetail> trnxList = trnxRepository.findByFromAccountNumberEquals(accountEntity.getAccountNumber());
+			List<TransactionDetail> trnxList = trnxRepository.findByFromAccountNumberOrderByTransactionDateDesc(accountEntity.getAccountNumber(),page);
 			accountDto.setTransactionDetails(trnxList);
 		}else {
 			throw new ResourceNotFoundException("Customer id is not found");

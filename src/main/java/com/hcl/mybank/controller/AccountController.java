@@ -1,6 +1,7 @@
 package com.hcl.mybank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.mybank.dto.AccountDetailsDto;
 import com.hcl.mybank.dto.FundTransferDto;
 import com.hcl.mybank.dto.ResponseDto;
+import com.hcl.mybank.mybank.service.FundTransferService;
 import com.hcl.mybank.service.AccountService;
-import com.hcl.mybank.service.FundTransferService;
 
 @CrossOrigin("*")
 @RestController
@@ -30,8 +31,8 @@ public class AccountController {
 	private FundTransferService fundTransferService;
 	
 	@GetMapping("/customers/{customerId}")
-	public ResponseEntity<ResponseDto> getTrends(@PathVariable("customerId") Long customerId){
-		AccountDetailsDto accontDto = accountService.getAccountDetailsWithTrnxs(customerId);
+	public ResponseEntity<ResponseDto> getTrends(@PathVariable("customerId") Long customerId,Pageable page){
+		AccountDetailsDto accontDto = accountService.getAccountDetailsWithTrnxs(customerId,page);
 		ResponseDto responseDto = new ResponseDto();
 		responseDto.setHttpStatus(HttpStatus.OK);
 		responseDto.setData(accontDto);
