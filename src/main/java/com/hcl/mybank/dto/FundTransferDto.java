@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class FundTransferDto {
 
-	String originalAccount;
+	String originAccount;
 	String destinationAccount;
 	Double amount;
 	String comments;
