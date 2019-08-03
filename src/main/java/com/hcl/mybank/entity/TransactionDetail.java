@@ -20,12 +20,12 @@ public class TransactionDetail {
 	private Long transactionId;
 
 	@OneToOne
-	@JoinColumn(name = "customerId")
-	private Customer fromAccount;
+	@JoinColumn(name = "accountId")
+	private AccountDetail fromAccount;
 
 	@OneToOne
-	@JoinColumn(name = "customerId")
-	private Customer toAccount;
+	@JoinColumn(name = "accountId")
+	private AccountDetail toAccount;
 
 	private Double transactionAmount;
 
