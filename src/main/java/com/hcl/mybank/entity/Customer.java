@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -35,9 +36,15 @@ public class Customer {
 	private String email;
 
 	private String password;
+	
+	@OneToOne(mappedBy = "customerId")
+	private AccountDetail account;
 
-	@OneToMany
-	@JoinTable(name = "beneficiary", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
-	List<Customer> beneficiaries;
+	/*
+	 * @OneToMany
+	 * 
+	 * @JoinTable(name = "beneficiary", joinColumns = @JoinColumn(name =
+	 * "customer_id"), inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
+	 */	List<Customer> beneficiaries;
 
 }
