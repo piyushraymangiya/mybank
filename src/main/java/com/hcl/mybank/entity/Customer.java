@@ -40,11 +40,5 @@ public class Customer {
 	@OneToOne(mappedBy = "customerId")
 	private AccountDetail account;
 
-	/*
-	 * @OneToMany
-	 * 
-	 * @JoinTable(name = "beneficiary", joinColumns = @JoinColumn(name =
-	 * "customer_id"), inverseJoinColumns = @JoinColumn(name = "beneficiary_id"))
-	 */	List<Customer> beneficiaries;
 
 }
