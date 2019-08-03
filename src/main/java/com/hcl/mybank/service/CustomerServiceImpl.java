@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.hcl.mybank.dto.AccountSummaryDto;
 import com.hcl.mybank.dto.CustomerDto;
 import com.hcl.mybank.dto.ResponseDto;
+import com.hcl.mybank.entity.AccountDetail;
 import com.hcl.mybank.entity.Customer;
 import com.hcl.mybank.exception.ResourceNotFoundException;
 import com.hcl.mybank.repository.AccountDetailRepository;
@@ -36,7 +38,15 @@ public class CustomerServiceImpl implements CustomerService {
 	public ResponseDto getAccountSummary(Long customerId) {
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new ResourceNotFoundException("customer not found"));
-		return new ResponseDto("Account Summary", HttpStatus.ACCEPTED, customer);
+		AccountDetail accountDetail = accountRepository.findByCustomerId(customer);
+
+		AccountSummaryDto accountSummaryDto = new AccountSummaryDto();
+		accountSummaryDto.setCustomerName(customer.getCustomerName());
+		accountSummaryDto.setAccountNumber(accountDetail.getAccountNumber());
+		accountSummaryDto.setAccountType(accountDetail.getAccountType());
+		accountSummaryDto.setAvailableBalance(accountDetail.getAccountBalance());
+
+		return new ResponseDto("Account Summary", HttpStatus.ACCEPTED, accountSummaryDto);
 	}
 
 }
